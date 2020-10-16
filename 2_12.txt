@@ -1,0 +1,58 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace SafeBoard_1
+{
+    internal class Program
+    {
+        public enum DataType
+        {
+            None = 0,
+            First = 1,
+            Second = 2,
+            Third = 3,
+            Fourth = 4
+        }
+        
+        public static void Main(string[] args)
+        {
+            var temp = new[] {"None", "First", "Second", "Third", "Fourth"};
+            var words = new Dictionary<string, int>();
+            for (int i = 0; i < temp.Length; i++)
+            {
+                words.Add(temp[i], i);
+            }
+            var errors = new List<string>();
+            var result = new int[5];
+            var input = Console.ReadLine().Split(',');
+
+            foreach (var str in input)
+            {
+                if (temp.Contains(str))
+                {
+                    result[words[str]]++;
+                }
+                else
+                {
+                    if (str.Length == 1 && str[0] >= '0' && str[0] <= '4')
+                    {
+                        result[Int32.Parse(str)]++;
+                    }
+                    else
+                    {
+                        errors.Add(str);
+                    }
+                }
+            }
+            Console.WriteLine("Input data types:");
+            Console.WriteLine($"None(0)-{result[0]}");
+            Console.WriteLine($"First(1)-{result[1]}");
+            Console.WriteLine($"Second(2)-{result[2]}");
+            Console.WriteLine($"Third(3)-{result[3]}");
+            Console.WriteLine($"Fourth(4)-{result[4]}");
+            Console.WriteLine("Errors:");
+            Console.WriteLine($"Not valid input strings: {string.Join(",", errors)}");
+        }
+    }
+}
